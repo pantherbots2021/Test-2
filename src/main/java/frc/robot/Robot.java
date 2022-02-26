@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -21,10 +24,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends TimedRobot {
-  private final PWMSparkMax m_leftDriveFront = new PWMSparkMax(1);
-  private final PWMSparkMax m_leftDriveBack = new PWMSparkMax(2);
-  private final PWMSparkMax m_rightDriveFront = new PWMSparkMax(5);
-  private final PWMSparkMax m_rightDriveBack = new PWMSparkMax(6); 
+  private final CANSparkMax m_leftDriveFront = new CANSparkMax(1, MotorType.kBrushless);
+  private final CANSparkMax m_leftDriveBack = new CANSparkMax(2, MotorType.kBrushless);
+  private final CANSparkMax m_rightDriveFront = new CANSparkMax(5, MotorType.kBrushless);
+  private final CANSparkMax m_rightDriveBack = new CANSparkMax(6, MotorType.kBrushless); 
 
   private final MotorControllerGroup leftDriveGroup = new MotorControllerGroup(m_leftDriveFront, m_leftDriveBack);
   private final MotorControllerGroup rightDriveGroup = new MotorControllerGroup(m_rightDriveFront, m_rightDriveBack);
