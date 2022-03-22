@@ -6,15 +6,15 @@ package frc.robot;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -29,6 +29,7 @@ public class Robot extends TimedRobot {
   private final CANSparkMax m_rightDriveFront = new CANSparkMax(5, MotorType.kBrushless);
   private final CANSparkMax m_rightDriveBack = new CANSparkMax(6, MotorType.kBrushless); 
   private final CANSparkMax m_MotorArm = new CANSparkMax(9, MotorType.kBrushless);
+  private final VictorSPX m_IntakeArm = new VictorSPX(10);
 
 
  
@@ -80,9 +81,33 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during teleoperated mode. */
   @Override
   public void teleopPeriodic() {
-    m_robotDrive.arcadeDrive(-m_stick.getRawAxis(1), m_stick.getRawAxis(2));
+    m_robotDrive.arcadeDrive(m_stick.getRawAxis(2) / 2, -m_stick.getRawAxis(1));
    
 
+    if(m_stick.getRawButton(5)){
+
+      m_IntakeArm.set(ControlMode.PercentOutput, -.5);
+    } 
+    else if(m_stick.getRawButton(6)){
+
+      m_IntakeArm.set(ControlMode.PercentOutput, .5);
+    } else {
+      m_IntakeArm.set(ControlMode.PercentOutput, 0);
+
+    }
+
+
+    if(m_stick.getRawButton(7)){
+
+      m_MotorArm.set(1);
+    } 
+    else if(m_stick.getRawButton(8)){
+
+      m_MotorArm.set(-.7);
+    } else {
+      m_MotorArm.set(0);
+
+    }
   
     SmartDashboard.putNumber("Left Y", m_stick.getRawAxis(1));
     SmartDashboard.putNumber("Right X", m_stick.getRawAxis(2));
