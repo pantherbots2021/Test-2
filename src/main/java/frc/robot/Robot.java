@@ -7,7 +7,7 @@ package frc.robot;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.GenericHID;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -24,10 +24,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends TimedRobot {
-  private final CANSparkMax m_leftDriveFront = new CANSparkMax(1, MotorType.kBrushless);
+  private final CANSparkMax m_leftDriveFront = new CANSparkMax(3, MotorType.kBrushless);
   private final CANSparkMax m_leftDriveBack = new CANSparkMax(2, MotorType.kBrushless);
   private final CANSparkMax m_rightDriveFront = new CANSparkMax(5, MotorType.kBrushless);
   private final CANSparkMax m_rightDriveBack = new CANSparkMax(6, MotorType.kBrushless); 
+  private final CANSparkMax m_MotorArm = new CANSparkMax(9, MotorType.kBrushless);
+
+
+ 
 
   private final MotorControllerGroup leftDriveGroup = new MotorControllerGroup(m_leftDriveFront, m_leftDriveBack);
   private final MotorControllerGroup rightDriveGroup = new MotorControllerGroup(m_rightDriveFront, m_rightDriveBack);
@@ -46,9 +50,8 @@ public class Robot extends TimedRobot {
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
-
     leftDriveGroup.setInverted(false);
-    rightDriveGroup.setInverted(true);
+    rightDriveGroup.setInverted(false);
   }
 
   /** This function is run once each time the robot enters autonomous mode. */
@@ -78,7 +81,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     m_robotDrive.arcadeDrive(-m_stick.getRawAxis(1), m_stick.getRawAxis(2));
-
+   
 
   
     SmartDashboard.putNumber("Left Y", m_stick.getRawAxis(1));
