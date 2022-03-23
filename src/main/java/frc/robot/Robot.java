@@ -67,9 +67,16 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     // Drive for 2 seconds
     if (m_timer.get() < 2.0) {
-      m_robotDrive.arcadeDrive(0.5, 0.0); // drive forwards half speed
+      m_robotDrive.arcadeDrive(0, 0.5); // drive forwards half speed
+      m_IntakeArm.set(ControlMode.PercentOutput, .5);
+
+      
     } else {
       m_robotDrive.stopMotor(); // stop robot
+      m_IntakeArm.set(ControlMode.PercentOutput, 0);
+
+      m_timer.stop();
+      
     }
   }
   // Test comment
@@ -81,7 +88,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during teleoperated mode. */
   @Override
   public void teleopPeriodic() {
-    m_robotDrive.arcadeDrive(m_stick.getRawAxis(2) / 2, -m_stick.getRawAxis(1));
+    m_robotDrive.arcadeDrive(m_stick.getRawAxis(4) / 2, -m_stick.getRawAxis(1));
    
 
     if(m_stick.getRawButton(5)){
@@ -97,11 +104,11 @@ public class Robot extends TimedRobot {
     }
 
 
-    if(m_stick.getRawButton(7)){
+    if(m_stick.getRawAxis(2) > .2){
 
       m_MotorArm.set(1);
     } 
-    else if(m_stick.getRawButton(8)){
+    else if(m_stick.getRawAxis(3) > .2){
 
       m_MotorArm.set(-.7);
     } else {
